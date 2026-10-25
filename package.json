@@ -1,0 +1,41 @@
+{
+  "name": "115-cloudflare-doh-ecs",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "deploy": "wrangler deploy",
+    "deploy:dry-run": "wrangler deploy --dry-run",
+    "dev": "wrangler dev",
+    "check": "npm run typecheck && npm test && npm run deploy:dry-run"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260727.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10",
+    "wrangler": "^4.114.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "cloudflare": {
+    "bindings": {
+      "DNS_TTL_MAX": {
+        "description": "DNS TTL 上限（秒）：默认 5；填 0 禁止 Mihomo 缓存普通应答；upstream 保留原 TTL。"
+      },
+      "TRUST_X_FORWARDED_FOR": {
+        "description": "默认 false，使用 CF-Connecting-IP 识别所选代理出口；仅有受信任的前置代理时设 true。"
+      },
+      "GLOBAL_DOH_URL": {
+        "description": "国外主上游，默认 Google，需支持 ECS 才能跟随代理节点地区。"
+      },
+      "GLOBAL_FALLBACK_DOH_URL": {
+        "description": "国外备用 Google 接入 IP；与主上游同一服务商，不保证独立容灾。"
+      }
+    }
+  }
+}

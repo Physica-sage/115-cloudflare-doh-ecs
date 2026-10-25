@@ -1,0 +1,20 @@
+# 合并到自己的 Mihomo 配置；替换 Worker 域名，保留自己的节点、代理组和路由。
+# 漏网之鱼应选中实际代理节点。首次迁移后清一次旧缓存。
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: redir-host
+  respect-rules: true
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:
+    - "https://YOUR-WORKER.YOUR-SUBDOMAIN.workers.dev/doh#漏网之鱼"
+  nameserver-policy:
+    "geosite:cn":
+      - "https://dns.alidns.com/dns-query#DIRECT"
+      - "https://doh.pub/dns-query#DIRECT"
+  direct-nameserver: []
